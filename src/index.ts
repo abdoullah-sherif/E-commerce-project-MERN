@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import userRouter from"./routes/userRoute";
+import productRouter from "./routes/productRoute"
+import { seedInitialProducts } from "./services/productService";
 const app = express();
 const PORT = process.env.PORT || 3001 ;
 app.use(express.json());
@@ -13,8 +15,11 @@ async function main() {
   console.log("connected")
 }
 
-app.use("/user",userRouter)
+seedInitialProducts();
 
+app.use("/user",userRouter);
+
+app.use("/products",productRouter);
 
 app.listen(PORT,()=>{
     console.log("app is running on "+PORT);
